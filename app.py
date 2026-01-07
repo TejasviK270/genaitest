@@ -1,22 +1,31 @@
-from google import genai
+import streamlit as st
 
-# 🔑 Put your Gemini API key directly here
-API_KEY = "AIzaSyCRwFiyRo1wpCQBBS0YHKKZQsdFIvMpIGk"
+import google.genai
 
-# Create Gemini client
-client = genai.Client(api_key=API_KEY)
+try:
 
-# Start a chat session
-chat = client.chats.create(model="gemini-2.5-flash")
+   # The SDK automatically uses st.secrets on Streamlit.
 
-print("Gemini Chat (type 'exit' to stop)\n")
+   client = google.genai.Client()
 
-while True:
-    user_input = input("You: ")
+  st.write("Gemini API client configured.")
 
-    if user_input.lower() == "exit":
-        print("Chat ended.")
-        break
+ 
 
-    response = chat.send_message(user_input)
-    print("Gemini:", response.text)
+   prompt = "Benefits of API key management?"
+
+   response = client.models.generate_content(
+
+      model="gemini-2.5-flash",
+
+      contents=prompt
+
+   )
+
+  st.write(f"Response: {response.text}")
+
+except Exception as e:
+
+  st.error(f"Error: {e}. Check your 'GEMINI_API_KEY' in secrets.")
+
+
