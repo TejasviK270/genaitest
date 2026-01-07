@@ -7,7 +7,7 @@ try:
 
     st.write("Gemini API client configured.")
 
-    prompt = "Benefits of API key management?"
+    prompt = input("")
 
     response = client.models.generate_content(
         model="gemini-2.5-flash",
