@@ -1,20 +1,28 @@
 import streamlit as st
 import google.genai as genai
 
+st.title("Gemini Prompt Playground")
+
 try:
-    # Streamlit automatically loads secrets as env vars
     client = genai.Client()
 
-    st.write("Gemini API client configured.")
-
-    prompt = input("")
-
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
+    # User input
+    user_prompt = st.text_area(
+        "Enter your prompt:",
+        placeholder="Ask Gemini anything..."
     )
 
-    st.write(response.text)
+    # Button to trigger API call
+    if st.button("Generate Response"):
+        if user_prompt.strip() == "":
+            st.warning("Please enter a prompt.")
+        else:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=user_prompt
+            )
+            st.subheader("Response")
+            st.write(response.text)
 
 except Exception as e:
     st.error(f"Error: {e}")
