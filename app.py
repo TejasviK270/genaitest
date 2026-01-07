@@ -5,7 +5,7 @@ while True:
    user_input = input("You: ")
    if user_input.lower() == "exit":
        print("Bot: Goodbye!")
-      break
+   break
 try:
     # Streamlit automatically loads secrets as env vars
     client = genai.Client()
