@@ -1,31 +1,20 @@
 import streamlit as st
-
-import google.genai
+import google.genai as genai
 
 try:
+    # Streamlit automatically loads secrets as env vars
+    client = genai.Client()
 
-   # The SDK automatically uses st.secrets on Streamlit.
+    st.write("Gemini API client configured.")
 
-   client = google.genai.Client()
+    prompt = "Benefits of API key management?"
 
-  st.write("Gemini API client configured.")
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt
+    )
 
- 
-
-   prompt = "Benefits of API key management?"
-
-   response = client.models.generate_content(
-
-      model="gemini-2.5-flash",
-
-      contents=prompt
-
-   )
-
-  st.write(f"Response: {response.text}")
+    st.write(response.text)
 
 except Exception as e:
-
-  st.error(f"Error: {e}. Check your 'GEMINI_API_KEY' in secrets.")
-
-
+    st.error(f"Error: {e}")
