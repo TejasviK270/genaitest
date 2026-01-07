@@ -1,6 +1,11 @@
 import streamlit as st
 import google.genai as genai
 
+while True:
+   user_input = input("You: ")
+   if user_input.lower() == "exit":
+       print("Bot: Goodbye!")
+      break
 try:
     # Streamlit automatically loads secrets as env vars
     client = genai.Client()
@@ -11,7 +16,7 @@ try:
 
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=prompt
+        contents=user_input
     )
 
     st.write(response.text)
